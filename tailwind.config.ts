@@ -13,6 +13,9 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -57,6 +60,12 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        // Cyberpunk specific colors
+        neon: {
+          cyan: "hsl(199 89% 60%)",
+          purple: "hsl(263 70% 58%)",
+          pink: "hsl(330 80% 60%)",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -65,25 +74,51 @@ export default {
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+        "float": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-20px)" },
+        },
+        "pulse-glow": {
+          "0%, 100%": { opacity: "0.4" },
+          "50%": { opacity: "0.8" },
+        },
+        "scan-line": {
+          "0%": { transform: "translateY(-100%)" },
+          "100%": { transform: "translateY(100vh)" },
+        },
+        "grid-flow": {
+          "0%": { backgroundPosition: "0 0" },
+          "100%": { backgroundPosition: "50px 50px" },
+        },
+        "fade-in-up": {
+          "0%": { opacity: "0", transform: "translateY(20px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        "glow-pulse": {
+          "0%, 100%": { boxShadow: "0 0 20px hsl(199 89% 60% / 0.4), 0 0 40px hsl(199 89% 60% / 0.2)" },
+          "50%": { boxShadow: "0 0 30px hsl(199 89% 60% / 0.6), 0 0 60px hsl(199 89% 60% / 0.3)" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "float": "float 6s ease-in-out infinite",
+        "pulse-glow": "pulse-glow 2s ease-in-out infinite",
+        "scan-line": "scan-line 8s linear infinite",
+        "grid-flow": "grid-flow 20s linear infinite",
+        "fade-in-up": "fade-in-up 0.6s ease-out forwards",
+        "glow-pulse": "glow-pulse 2s ease-in-out infinite",
+      },
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'cyber-grid': 'linear-gradient(hsl(199 89% 60% / 0.1) 1px, transparent 1px), linear-gradient(90deg, hsl(199 89% 60% / 0.1) 1px, transparent 1px)',
       },
     },
   },

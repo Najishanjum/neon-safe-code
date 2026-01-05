@@ -18,29 +18,56 @@ export type Database = {
         Row: {
           created_at: string
           email: string
+          facebook_url: string | null
+          github_url: string | null
+          google_url: string | null
           id: string
+          image_url: string | null
+          instagram_url: string | null
+          linkedin_url: string | null
           password: string
           title: string
+          twitter_url: string | null
           updated_at: string
           user_id: string
+          website_url: string | null
+          youtube_url: string | null
         }
         Insert: {
           created_at?: string
           email: string
+          facebook_url?: string | null
+          github_url?: string | null
+          google_url?: string | null
           id?: string
+          image_url?: string | null
+          instagram_url?: string | null
+          linkedin_url?: string | null
           password: string
           title: string
+          twitter_url?: string | null
           updated_at?: string
           user_id: string
+          website_url?: string | null
+          youtube_url?: string | null
         }
         Update: {
           created_at?: string
           email?: string
+          facebook_url?: string | null
+          github_url?: string | null
+          google_url?: string | null
           id?: string
+          image_url?: string | null
+          instagram_url?: string | null
+          linkedin_url?: string | null
           password?: string
           title?: string
+          twitter_url?: string | null
           updated_at?: string
           user_id?: string
+          website_url?: string | null
+          youtube_url?: string | null
         }
         Relationships: []
       }

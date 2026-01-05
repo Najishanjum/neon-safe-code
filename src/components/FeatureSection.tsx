@@ -14,8 +14,8 @@ const features = [
   },
   {
     icon: Fingerprint,
-    title: 'Encrypted Storage',
-    description: 'All credentials encrypted with AES-256-GCM before leaving your browser.',
+    title: 'Social Media Integration',
+    description: 'Store and manage all your social media profiles with easy one-click access.',
   },
   {
     icon: Zap,
@@ -24,8 +24,8 @@ const features = [
   },
   {
     icon: Database,
-    title: 'Unlimited Storage',
-    description: 'Store as many credentials as you need. No artificial limits.',
+    title: 'Image Attachments',
+    description: 'Attach profile images or screenshots to your credentials for easy identification.',
   },
   {
     icon: Code,

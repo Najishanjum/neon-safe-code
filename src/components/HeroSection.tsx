@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Shield, Lock, Key, ArrowRight, Terminal } from 'lucide-react';
+import { Shield, Key, ArrowRight, Terminal, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
@@ -26,8 +26,8 @@ const HeroSection = () => {
               transition={{ delay: 0.3 }}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/30 mb-6"
             >
-              <Lock className="w-4 h-4 text-primary" />
-              <span className="text-sm text-primary">Military-Grade Encryption</span>
+              <Sparkles className="w-4 h-4 text-primary" />
+              <span className="text-sm text-primary">Developer-First Security</span>
             </motion.div>
 
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
@@ -156,7 +156,7 @@ const HeroSection = () => {
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               className="absolute -top-8 -right-8 w-16 h-16 glass-card rounded-xl flex items-center justify-center"
             >
-              <Lock className="w-8 h-8 text-primary" />
+              <Shield className="w-8 h-8 text-primary" />
             </motion.div>
 
             <motion.div

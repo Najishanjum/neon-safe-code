@@ -3,27 +3,136 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CyberVault - Secure Credential Storage</title>
+
+    <title>CyberVault — Secure Credential Storage</title>
+
     <meta name="description" content="A futuristic, developer-focused password vault with military-grade security" />
     <meta name="author" content="CyberVault" />
 
+    <!-- Open Graph -->
     <meta property="og:title" content="CyberVault - Secure Credential Storage" />
     <meta property="og:description" content="A futuristic, developer-focused password vault with military-grade security" />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@CyberVault" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-
-    <!-- JetBrains Mono Font -->
+    <!-- Fonts (🔥 Premium Combo) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+      :root{
+        --bg:#050508;
+        --cyan:#37e6ff;
+        --purple:#b254ff;
+      }
+
+      *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+      }
+
+      body{
+        font-family:'Inter', sans-serif;
+        background:#000;
+        color:white;
+        overflow:hidden;
+      }
+
+      /* 🔥 Animated Gradient Background */
+      body::before{
+        content:"";
+        position:fixed;
+        inset:0;
+        background:
+          radial-gradient(circle at 20% 30%, #b254ff33, transparent 40%),
+          radial-gradient(circle at 80% 70%, #37e6ff33, transparent 40%);
+        animation:moveBg 12s infinite alternate ease-in-out;
+        z-index:-2;
+      }
+
+      @keyframes moveBg{
+        0%{transform:translate(0,0)}
+        100%{transform:translate(-60px,-60px)}
+      }
+
+      /* ⚡ Grid Cyber Effect */
+      body::after{
+        content:"";
+        position:fixed;
+        inset:0;
+        background:
+          linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+        background-size: 40px 40px;
+        animation:gridMove 20s linear infinite;
+        z-index:-1;
+      }
+
+      @keyframes gridMove{
+        from{transform:translateY(0)}
+        to{transform:translateY(40px)}
+      }
+
+      /* 🚀 Loader (before React loads) */
+      #loader{
+        position:fixed;
+        inset:0;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        flex-direction:column;
+        gap:1rem;
+        font-family:'Space Grotesk';
+        background:#000;
+        z-index:10;
+      }
+
+      .logo{
+        font-size:2rem;
+        background:linear-gradient(90deg,var(--purple),var(--cyan));
+        -webkit-background-clip:text;
+        -webkit-text-fill-color:transparent;
+      }
+
+      .typing{
+        font-family:'JetBrains Mono';
+        color:#aaa;
+        border-right:2px solid var(--cyan);
+        padding-right:5px;
+        animation:blink 1s infinite;
+      }
+
+      @keyframes blink{
+        50%{border-color:transparent}
+      }
+    </style>
   </head>
 
   <body>
+
+    <!-- ⚡ Premium Loader -->
+    <div id="loader">
+      <div class="logo">CyberVault</div>
+      <div class="typing">Initializing secure system...</div>
+    </div>
+
     <div id="root"></div>
+
     <script type="module" src="/src/main.tsx"></script>
+
+    <!-- Hide loader after React loads -->
+    <script>
+      window.addEventListener("load",()=>{
+        const loader=document.getElementById("loader");
+        if(loader){
+          loader.style.opacity="0";
+          loader.style.transition="0.6s";
+          setTimeout(()=>loader.remove(),600);
+        }
+      });
+    </script>
+
   </body>
 </html>

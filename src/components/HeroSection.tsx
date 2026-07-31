@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Shield, Key, ArrowRight, Terminal, Sparkles } from 'lucide-react';
+import { Shield, Key, ArrowRight, Terminal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
@@ -10,42 +10,50 @@ const HeroSection = () => {
     '> Status: PROTECTED',
   ];
 
+  const tags = [
+    { label: 'Zero Knowledge', color: 'bg-arcade-yellow', rotate: '-rotate-2' },
+    { label: 'Encrypted', color: 'bg-arcade-red', rotate: 'rotate-1' },
+    { label: 'Dev First', color: 'bg-arcade-blue', rotate: '-rotate-1' },
+  ];
+
   return (
-    <section className="min-h-screen flex items-center justify-center px-6 pt-24 pb-12">
+    <section className="min-h-screen flex items-center justify-center px-6 pt-40 pb-16">
       <div className="max-w-6xl mx-auto w-full">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left content */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.6 }}
           >
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/30 mb-6"
-            >
-              <Sparkles className="w-4 h-4 text-primary" />
-              <span className="text-sm text-primary">Developer-First Security</span>
-            </motion.div>
-
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
-              <span className="text-foreground">Your Credentials,</span>
-              <br />
-              <span className="text-primary neon-text">Fortified.</span>
+            <h1 className="text-5xl md:text-6xl lg:text-7xl leading-[0.9] mb-6">
+              <span className="block text-foreground">Your</span>
+              <span className="block text-arcade-lime" style={{ textShadow: '6px 6px 0 #000' }}>
+                Credentials
+              </span>
+              <span className="block text-foreground">Fortified</span>
             </h1>
 
-            <p className="text-lg text-muted-foreground mb-8 max-w-lg">
-              A developer-focused password vault with zero-knowledge architecture. 
-              Store, manage, and access your credentials with the security you deserve.
+            <div className="flex flex-wrap gap-3 mb-8">
+              {tags.map((t) => (
+                <span
+                  key={t.label}
+                  className={`tape-tag text-xs text-primary-foreground ${t.color} ${t.rotate}`}
+                >
+                  {t.label}
+                </span>
+              ))}
+            </div>
+
+            <p className="text-base md:text-lg text-muted-foreground mb-8 max-w-lg font-medium">
+              A developer-focused password vault with zero-knowledge architecture. Store, manage,
+              and access your credentials with the security you deserve.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/auth?mode=signup">
                 <Button
                   size="lg"
-                  className="w-full sm:w-auto neon-glow bg-primary text-primary-foreground hover:bg-primary/90 group"
+                  className="w-full sm:w-auto rounded-none border-2 border-foreground bg-arcade-lime text-primary-foreground font-black uppercase shadow-brutal hover:bg-arcade-lime/90 hover:translate-x-[-3px] hover:translate-y-[-3px] transition-transform group"
                 >
                   Start Securing
                   <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
@@ -54,117 +62,91 @@ const HeroSection = () => {
               <Link to="/auth">
                 <Button
                   size="lg"
-                  variant="outline"
-                  className="w-full sm:w-auto border-border hover:border-primary hover:bg-primary/10 hover:text-primary"
+                  className="w-full sm:w-auto rounded-none border-2 border-foreground bg-background text-foreground font-black uppercase shadow-brutal hover:bg-arcade-blue hover:text-secondary-foreground hover:translate-x-[-3px] hover:translate-y-[-3px] transition-transform"
                 >
                   Access Vault
                 </Button>
               </Link>
             </div>
 
-            {/* Stats */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-              className="flex gap-8 mt-12 pt-8 border-t border-border"
-            >
-              <div>
-                <div className="text-2xl font-bold text-primary">256-bit</div>
-                <div className="text-sm text-muted-foreground">AES Encryption</div>
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-primary">Zero</div>
-                <div className="text-sm text-muted-foreground">Knowledge</div>
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-primary">100%</div>
-                <div className="text-sm text-muted-foreground">Private</div>
-              </div>
-            </motion.div>
+            <div className="grid grid-cols-3 gap-3 mt-12">
+              {[
+                { v: '256-bit', l: 'AES Encryption', c: 'bg-arcade-lime' },
+                { v: 'Zero', l: 'Knowledge', c: 'bg-arcade-blue' },
+                { v: '100%', l: 'Private', c: 'bg-arcade-yellow' },
+              ].map((s) => (
+                <div
+                  key={s.l}
+                  className={`brutal-block ${s.c} text-primary-foreground p-3`}
+                >
+                  <div className="font-display italic text-xl">{s.v}</div>
+                  <div className="text-[11px] font-bold uppercase tracking-wide">{s.l}</div>
+                </div>
+              ))}
+            </div>
           </motion.div>
 
-          {/* Right content - Animated terminal */}
+          {/* Terminal panel */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            transition={{ duration: 0.6, delay: 0.15 }}
             className="relative"
           >
-            <div className="gradient-border">
-              <div className="glass-card rounded-xl overflow-hidden">
-                {/* Terminal header */}
-                <div className="flex items-center gap-2 px-4 py-3 border-b border-border bg-muted/30">
-                  <div className="flex gap-2">
-                    <div className="w-3 h-3 rounded-full bg-destructive/60" />
-                    <div className="w-3 h-3 rounded-full bg-yellow-500/60" />
-                    <div className="w-3 h-3 rounded-full bg-green-500/60" />
+            <div className="brutal-card">
+              <div className="flex items-center gap-3 px-4 py-3 border-b-2 border-foreground bg-arcade-blue">
+                <div className="flex gap-2">
+                  <div className="w-3 h-3 bg-arcade-red border border-foreground" />
+                  <div className="w-3 h-3 bg-arcade-yellow border border-foreground" />
+                  <div className="w-3 h-3 bg-arcade-lime border border-foreground" />
+                </div>
+                <div className="flex items-center gap-2 text-xs font-black uppercase text-secondary-foreground">
+                  <Terminal className="w-3 h-3" />
+                  cybervault.secure
+                </div>
+              </div>
+
+              <div className="p-6 min-h-[300px] font-mono">
+                {codeLines.map((line, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.5 + index * 0.25 }}
+                    className="text-sm mb-2 text-arcade-lime"
+                  >
+                    {line}
+                  </motion.div>
+                ))}
+
+                <div className="mt-6 pt-4 border-t-2 border-foreground/20 space-y-3">
+                  <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                    <Key className="w-4 h-4 text-arcade-yellow" />
+                    <span>
+                      Stored credentials: <span className="text-arcade-lime">Ready</span>
+                    </span>
                   </div>
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground ml-4">
-                    <Terminal className="w-3 h-3" />
-                    cybervault.secure
+                  <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                    <Shield className="w-4 h-4 text-arcade-blue" />
+                    <span>
+                      Vault status: <span className="text-arcade-lime">Active</span>
+                    </span>
                   </div>
                 </div>
 
-                {/* Terminal body */}
-                <div className="p-6 min-h-[300px]">
-                  {codeLines.map((line, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.8 + index * 0.3 }}
-                      className="font-mono text-sm mb-2"
-                    >
-                      <span className="text-primary">{line}</span>
-                    </motion.div>
-                  ))}
-                  
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1.8 }}
-                    className="mt-6 pt-4 border-t border-border"
-                  >
-                    <div className="flex items-center gap-3 text-sm text-muted-foreground mb-4">
-                      <Key className="w-4 h-4 text-secondary" />
-                      <span>Stored credentials: <span className="text-primary">Ready</span></span>
-                    </div>
-                    <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                      <Shield className="w-4 h-4 text-secondary" />
-                      <span>Vault status: <span className="text-green-400">Active</span></span>
-                    </div>
-                  </motion.div>
-
-                  {/* Blinking cursor */}
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 2 }}
-                    className="mt-4 flex items-center"
-                  >
-                    <span className="text-primary mr-2">&gt;</span>
-                    <span className="w-2 h-5 bg-primary cursor-blink" />
-                  </motion.div>
+                <div className="mt-4 flex items-center">
+                  <span className="text-arcade-lime mr-2">&gt;</span>
+                  <span className="w-2 h-5 bg-arcade-lime cursor-blink" />
                 </div>
               </div>
             </div>
 
-            {/* Floating elements */}
             <motion.div
               animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -top-8 -right-8 w-16 h-16 glass-card rounded-xl flex items-center justify-center"
+              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+              className="absolute -top-8 -right-6 w-16 h-16 bg-arcade-yellow border-2 border-foreground shadow-brutal-sm flex items-center justify-center"
             >
-              <Shield className="w-8 h-8 text-primary" />
-            </motion.div>
-
-            <motion.div
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              className="absolute -bottom-6 -left-6 w-12 h-12 glass-card rounded-xl flex items-center justify-center"
-            >
-              <Key className="w-6 h-6 text-secondary" />
+              <Shield className="w-8 h-8 text-primary-foreground" />
             </motion.div>
           </motion.div>
         </div>

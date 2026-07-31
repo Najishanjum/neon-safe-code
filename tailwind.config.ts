@@ -14,7 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+        sans: ['Archivo', 'sans-serif'],
+        display: ['Archivo Black', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -60,17 +62,23 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-        // Cyberpunk specific colors
-        neon: {
-          cyan: "hsl(199 89% 60%)",
-          purple: "hsl(263 70% 58%)",
-          pink: "hsl(330 80% 60%)",
+        arcade: {
+          lime: "hsl(var(--arcade-lime))",
+          blue: "hsl(var(--arcade-blue))",
+          yellow: "hsl(var(--arcade-yellow))",
+          red: "hsl(var(--arcade-red))",
+          purple: "hsl(var(--arcade-purple))",
         },
+      },
+      boxShadow: {
+        brutal: "8px 8px 0 0 hsl(0 0% 0%)",
+        "brutal-sm": "4px 4px 0 0 hsl(0 0% 0%)",
+        "brutal-lime": "8px 8px 0 0 hsl(var(--arcade-lime))",
       },
       borderRadius: {
         lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        md: "var(--radius)",
+        sm: "var(--radius)",
       },
       keyframes: {
         "accordion-down": {
@@ -81,13 +89,13 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        "float": {
+        float: {
           "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-20px)" },
+          "50%": { transform: "translateY(-14px)" },
         },
         "pulse-glow": {
-          "0%, 100%": { opacity: "0.4" },
-          "50%": { opacity: "0.8" },
+          "0%, 100%": { opacity: "0.5" },
+          "50%": { opacity: "1" },
         },
         "scan-line": {
           "0%": { transform: "translateY(-100%)" },
@@ -95,30 +103,36 @@ export default {
         },
         "grid-flow": {
           "0%": { backgroundPosition: "0 0" },
-          "100%": { backgroundPosition: "50px 50px" },
+          "100%": { backgroundPosition: "48px 48px" },
         },
         "fade-in-up": {
           "0%": { opacity: "0", transform: "translateY(20px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
         "glow-pulse": {
-          "0%, 100%": { boxShadow: "0 0 20px hsl(199 89% 60% / 0.4), 0 0 40px hsl(199 89% 60% / 0.2)" },
-          "50%": { boxShadow: "0 0 30px hsl(199 89% 60% / 0.6), 0 0 60px hsl(199 89% 60% / 0.3)" },
+          "0%, 100%": { transform: "translate(0,0)" },
+          "50%": { transform: "translate(-2px,-2px)" },
+        },
+        marquee: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "float": "float 6s ease-in-out infinite",
+        float: "float 6s ease-in-out infinite",
         "pulse-glow": "pulse-glow 2s ease-in-out infinite",
         "scan-line": "scan-line 8s linear infinite",
         "grid-flow": "grid-flow 20s linear infinite",
         "fade-in-up": "fade-in-up 0.6s ease-out forwards",
         "glow-pulse": "glow-pulse 2s ease-in-out infinite",
+        marquee: "marquee 18s linear infinite",
       },
       backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'cyber-grid': 'linear-gradient(hsl(199 89% 60% / 0.1) 1px, transparent 1px), linear-gradient(90deg, hsl(199 89% 60% / 0.1) 1px, transparent 1px)',
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "cyber-grid":
+          "linear-gradient(hsl(0 0% 100% / 0.06) 1px, transparent 1px), linear-gradient(90deg, hsl(0 0% 100% / 0.06) 1px, transparent 1px)",
       },
     },
   },

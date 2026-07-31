@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Shield, Lock, LogOut } from 'lucide-react';
+import { Shield, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
@@ -17,9 +17,9 @@ const Navbar = ({ user }: NavbarProps) => {
     const { error } = await supabase.auth.signOut();
     if (error) {
       toast({
-        title: "Error",
-        description: "Failed to sign out",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to sign out',
+        variant: 'destructive',
       });
     } else {
       navigate('/');
@@ -30,67 +30,65 @@ const Navbar = ({ user }: NavbarProps) => {
     <motion.nav
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="fixed top-0 left-0 right-0 z-50 px-6 py-4"
+      transition={{ duration: 0.4 }}
+      className="fixed top-0 left-0 right-0 z-50 bg-background border-b-2 border-foreground"
     >
-      <div className="max-w-7xl mx-auto">
-        <div className="glass-card rounded-xl px-6 py-3 flex items-center justify-between">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="relative">
-              <Shield className="w-8 h-8 text-primary transition-all group-hover:scale-110" />
-              <motion.div
-                className="absolute inset-0 bg-primary/30 rounded-full blur-md"
-                animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
-            </div>
-            <span className="text-xl font-semibold tracking-tight">
-              <span className="text-primary neon-text">Cyber</span>
-              <span className="text-foreground">Vault</span>
-            </span>
-          </Link>
-
-          {/* Navigation */}
-          <div className="flex items-center gap-4">
-            {user ? (
-              <>
-                <span className="text-sm text-muted-foreground hidden sm:block">
-                  <Lock className="w-4 h-4 inline mr-2" />
-                  {user.email}
-                </span>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleLogout}
-                  className="text-muted-foreground hover:text-primary hover:bg-primary/10"
-                >
-                  <LogOut className="w-4 h-4 mr-2" />
-                  Sign Out
-                </Button>
-              </>
-            ) : (
-              <>
-                <Link to="/auth">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-muted-foreground hover:text-primary hover:bg-primary/10"
-                  >
-                    Sign In
-                  </Button>
-                </Link>
-                <Link to="/auth?mode=signup">
-                  <Button
-                    size="sm"
-                    className="neon-glow bg-primary text-primary-foreground hover:bg-primary/90"
-                  >
-                    Get Started
-                  </Button>
-                </Link>
-              </>
-            )}
+      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
+        {/* Logo */}
+        <Link to="/" className="flex items-center gap-3 group">
+          <div className="w-10 h-10 bg-arcade-lime border-2 border-foreground shadow-brutal-sm flex items-center justify-center">
+            <Shield className="w-5 h-5 text-primary-foreground" />
           </div>
+          <span className="font-display italic uppercase text-xl tracking-tight">
+            <span className="text-foreground">Cyber</span>
+            <span className="text-arcade-lime">Vault</span>
+          </span>
+        </Link>
+
+        <div className="flex items-center gap-3">
+          {user ? (
+            <>
+              <span className="hidden sm:block text-xs font-bold uppercase tracking-wide text-muted-foreground">
+                {user.email}
+              </span>
+              <Button
+                size="sm"
+                onClick={handleLogout}
+                className="rounded-none border-2 border-foreground bg-arcade-red text-foreground font-black uppercase shadow-brutal-sm hover:bg-arcade-red/90 hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform"
+              >
+                <LogOut className="w-4 h-4 mr-2" />
+                Sign Out
+              </Button>
+            </>
+          ) : (
+            <>
+              <Link to="/auth">
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="rounded-none font-black uppercase text-arcade-blue hover:bg-arcade-blue hover:text-secondary-foreground"
+                >
+                  Sign In
+                </Button>
+              </Link>
+              <Link to="/auth?mode=signup">
+                <Button
+                  size="sm"
+                  className="rounded-none border-2 border-foreground bg-arcade-lime text-primary-foreground font-black uppercase shadow-brutal-sm hover:bg-arcade-lime/90 hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform"
+                >
+                  Get Started
+                </Button>
+              </Link>
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* Status strip */}
+      <div className="bg-background border-t-2 border-foreground/20 px-6 py-2 hidden sm:block">
+        <div className="max-w-7xl mx-auto flex items-center justify-between text-[11px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+          <span>Zero-Knowledge Vault Core</span>
+          <span className="text-arcade-lime">AES-256 · Online</span>
         </div>
       </div>
     </motion.nav>

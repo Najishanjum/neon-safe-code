@@ -2,7 +2,13 @@
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+Tech-focused stack/project related to development and systems, representing developer mindset and technical foundation.
+
+Development
+DSA
+Algorithms
+Tech Stack
+Code
 
 ## How can I edit this code?
 

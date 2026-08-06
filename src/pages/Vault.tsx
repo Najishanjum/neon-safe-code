@@ -452,7 +452,19 @@ const Vault = () => {
     cred.email.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  if (!user) return null;
+  if (!user || lockMode === 'checking') return null;
+
+  if (!cryptoKey) {
+    return (
+      <VaultLock
+        mode={lockMode}
+        loading={lockLoading}
+        error={lockError}
+        onSubmit={handlePassphrase}
+        onSignOut={handleLockSignOut}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen">

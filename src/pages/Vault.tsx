@@ -13,6 +13,16 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import AnimatedBackground from '@/components/AnimatedBackground';
 import Navbar from '@/components/Navbar';
+import VaultLock from '@/components/VaultLock';
+import {
+  deriveKey,
+  generateSalt,
+  createVerifier,
+  checkVerifier,
+  encryptString,
+  decryptString,
+  isEncrypted,
+} from '@/lib/crypto';
 
 interface Credential {
   id: string;

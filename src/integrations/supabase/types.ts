@@ -71,6 +71,30 @@ export type Database = {
         }
         Relationships: []
       }
+      vault_keys: {
+        Row: {
+          created_at: string
+          salt: string
+          updated_at: string
+          user_id: string
+          verifier: string
+        }
+        Insert: {
+          created_at?: string
+          salt: string
+          updated_at?: string
+          user_id: string
+          verifier: string
+        }
+        Update: {
+          created_at?: string
+          salt?: string
+          updated_at?: string
+          user_id?: string
+          verifier?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

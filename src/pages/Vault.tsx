@@ -60,6 +60,12 @@ const Vault = () => {
   const [editingCredential, setEditingCredential] = useState<Credential | null>(null);
   const [visiblePasswords, setVisiblePasswords] = useState<Set<string>>(new Set());
   const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  // Encryption state — the derived key lives only in memory for this session.
+  const [cryptoKey, setCryptoKey] = useState<CryptoKey | null>(null);
+  const [lockMode, setLockMode] = useState<'checking' | 'setup' | 'unlock'>('checking');
+  const [lockLoading, setLockLoading] = useState(false);
+  const [lockError, setLockError] = useState<string | null>(null);
   
   // Form state
   const [formTitle, setFormTitle] = useState('');
@@ -82,13 +88,21 @@ const Vault = () => {
         return;
       }
       setUser({ id: session.user.id, email: session.user.email || '' });
-      fetchCredentials(session.user.id);
+
+      const { data: keyRow } = await supabase
+        .from('vault_keys')
+        .select('salt, verifier')
+        .eq('user_id', session.user.id)
+        .maybeSingle();
+
+      setLockMode(keyRow ? 'unlock' : 'setup');
     };
 
     checkAuth();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (!session) {
+        setCryptoKey(null);
         navigate('/auth');
       } else {
         setUser({ id: session.user.id, email: session.user.email || '' });
@@ -98,7 +112,70 @@ const Vault = () => {
     return () => subscription.unsubscribe();
   }, [navigate]);
 
-  const fetchCredentials = async (userId: string) => {
+  /** Derives the key from the passphrase, then unlocks or initialises the vault. */
+  const handlePassphrase = async (passphrase: string) => {
+    if (!user) return;
+    setLockLoading(true);
+    setLockError(null);
+
+    try {
+      if (lockMode === 'setup') {
+        const salt = generateSalt();
+        const key = await deriveKey(passphrase, salt);
+        const verifier = await createVerifier(key);
+
+        const { error } = await supabase
+          .from('vault_keys')
+          .insert({ user_id: user.id, salt, verifier });
+
+        if (error) throw error;
+
+        setCryptoKey(key);
+        await fetchCredentials(user.id, key);
+        toast({
+          title: "Vault encrypted",
+          description: "Your credentials are now encrypted before they leave this device.",
+        });
+      } else {
+        const { data: keyRow, error } = await supabase
+          .from('vault_keys')
+          .select('salt, verifier')
+          .eq('user_id', user.id)
+          .maybeSingle();
+
+        if (error) throw error;
+        if (!keyRow) {
+          setLockMode('setup');
+          return;
+        }
+
+        const key = await deriveKey(passphrase, keyRow.salt);
+        const valid = await checkVerifier(key, keyRow.verifier);
+        if (!valid) {
+          setLockError('Incorrect master passphrase');
+          return;
+        }
+
+        setCryptoKey(key);
+        await fetchCredentials(user.id, key);
+      }
+    } catch (error: any) {
+      setLockError(error.message || 'Could not unlock the vault');
+    } finally {
+      setLockLoading(false);
+    }
+  };
+
+  const handleLockSignOut = async () => {
+    setCryptoKey(null);
+    await supabase.auth.signOut();
+    navigate('/auth');
+  };
+
+  const fetchCredentials = async (userId: string, key?: CryptoKey | null) => {
+    const activeKey = key ?? cryptoKey;
+    if (!activeKey) return;
+
     setLoading(true);
     const { data, error } = await supabase
       .from('credentials')
@@ -113,10 +190,35 @@ const Vault = () => {
         variant: "destructive",
       });
     } else {
-      setCredentials(data || []);
+      const decrypted = await Promise.all(
+        (data || []).map(async (row) => ({
+          ...row,
+          email: await decryptString(activeKey, row.email),
+          password: await decryptString(activeKey, row.password),
+        }))
+      );
+
+      // Transparently upgrade any rows saved before encryption was enabled.
+      const legacy = (data || []).filter((row) => !isEncrypted(row.email) || !isEncrypted(row.password));
+      if (legacy.length > 0) {
+        await Promise.all(
+          legacy.map(async (row) =>
+            supabase
+              .from('credentials')
+              .update({
+                email: await encryptString(activeKey, row.email),
+                password: await encryptString(activeKey, row.password),
+              })
+              .eq('id', row.id)
+          )
+        );
+      }
+
+      setCredentials(decrypted);
     }
     setLoading(false);
   };
+
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

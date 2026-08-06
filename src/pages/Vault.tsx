@@ -278,15 +278,16 @@ const Vault = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user) return;
+    if (!user || !cryptoKey) return;
 
     setFormLoading(true);
 
     try {
       const credentialData = {
         title: formTitle.trim(),
-        email: formEmail.trim(),
-        password: formPassword,
+        // Encrypted in the browser — the database never sees the real values.
+        email: await encryptString(cryptoKey, formEmail.trim()),
+        password: await encryptString(cryptoKey, formPassword),
         image_url: formImageUrl || null,
         website_url: formSocialLinks.website_url || null,
         instagram_url: formSocialLinks.instagram_url || null,
